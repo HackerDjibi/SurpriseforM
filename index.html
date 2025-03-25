@@ -277,7 +277,7 @@
                             <li><span>❤️</span> → Le sourire qui fait fondre mon âme.</li>
                             <li><span>✨</span> → Le rire qui résonne comme une mélodie en moi.</li>
                             <li><span>🌹</span> → La main que je veux tenir pour l’éternité.</li>
-                            <li><span>>🌟</span> → L’amour que je n’ose même plus rêver, parce que tu le rends réel.</li>
+                            <li><span>🌟</span> → L’amour que je n’ose même plus rêver, parce que tu le rends réel.</li>
                         </ul>
                     </div>
                     
@@ -381,22 +381,17 @@
         }
 
         // Animation des cœurs
-        function startHeartsAnimation() {
-            clearInterval(heartsInterval);
-            heartsInterval = setInterval(createHeart, 300);
-        }
-
         function createHeart() {
-            const hearts = ['❤️', '💖', '💗', '💓', '💞', '💕', '💘'];
-            const heart = document.createElement('div');
+        const hearts = ['❤️', '💖', '💗', '💓', '💞', '💕', '💘'];
+        const heart = document.createElement('div');
             heart.className = 'floating-heart';
             heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.top = '100vh';
             heart.style.fontSize = (20 + Math.random() * 30) + 'px';
             heart.style.animationDuration = (3 + Math.random() * 7) + 's';
-            document.querySelector('.hearts-animation').appendChild(heart);
-            
+            document.body.appendChild(heart);
+    
             setTimeout(() => heart.remove(), 10000);
         }
 
