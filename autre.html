@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire M####</title>
+    <style>
+        /* Styles de base */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Styles pour l'écran de logo */
+        .logo-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .logo-screen .logo {
+            max-width: 80%;
+            max-height: 80%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Vidéo de fond */
+        .background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            filter: brightness(0.7);
+        }
+
+        /* Instructions */
+        .instruction {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* Cadeau */
+        .gift-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .gift-box img {
+            width: 200px;
+            height: auto;
+        }
+
+        .gift-box:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Vidéo d'anniversaire */
+        #videoContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 5;
+        }
+
+        #birthdayVideo {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,105,180,0.8);
+        }
+
+        /* Message d'amour */
+        .love-message {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            color: #d23669;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .love-message h1 {
+            color: #ff1493;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .message-content {
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .qualities ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .qualities li {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .qualities li span {
+            position: absolute;
+            left: 0;
+        }
+
+        .love-text {
+            font-style: italic;
+            margin: 25px 0;
+        }
+
+        .promise {
+            font-weight: bold;
+            color: #ff1493;
+            font-size: 1.2em;
+        }
+
+        .signature {
+            margin-top: 30px;
+            font-size: 1.3em;
+            font-style: italic;
+        }
+
+        /* Bouton */
+        button {
+            background: linear-gradient(to right, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255,20,147,0.4);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255,20,147,0.6);
+        }
+
+        /* Animation des cœurs */
+        .hearts-animation {
+            position: fixed; /* Change to fixed to cover the entire screen */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Prevent interaction with hearts */
+        }
+
+        /* Cœurs flottants (sera généré par JS) */
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 6s linear forwards;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-300px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .next-link {
+            display: inline-block;
+            margin: 30px auto 0;
+            padding: 15px 40px;
+            background: #ff1493;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .next-link:hover {
+            background: #ff69b4;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Écran de logo -->
+    <div id="logo-screen" class="logo-screen">
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+
+    <p class="instruction">Clique sur le cadeau, mon amour</p>
+    <video autoplay loop muted class="background-video">
+        <source src="VB.mp4" type="video/mp4">
+    </video>
+    
+    <div class="content">
+        <!-- Étape 1 : Cadeau à cliquer -->
+        <div id="giftBox" class="gift-box" onclick="openGift()">
+            <img src="G1.gif" alt="Cadeau pour M####">
+        </div>
+        
+        <!-- Étape 2 : Vidéo d'anniversaire -->
+        <div id="videoContainer" class="hidden">
+            <video id="birthdayVideo">
+                <source src="vHBD.mp4" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- Étape 3 : Message romantique -->
+        <div id="finalMessage" class="hidden">
+            <div class="love-message">
+                <h1>💖 Joyeux Anniversaire M#### ! 💖</h1>
+                
+                <div class="message-content">
+                    <p>Aujourd’hui, le monde est plus beau <br> 
+                        parce que c’est ton jour <br>
+                        le jour où l’univers a offert <br>
+                        à la Terre une perle rare : <strong>TOI. 🌟✨</strong> </p>
+                    
+                    <div class="qualities">
+                        <p>Tu es :</p>
+                        <ul>
+                            <li><span>❤️</span> → Le sourire qui fait fondre mon âme.</li>
+                            <li><span>✨</span> → Le rire qui résonne comme une mélodie en moi.</li>
+                            <li><span>🌹</span> → La main que je veux tenir pour l’éternité.</li>
+                            <li><span>>🌟</span> → L’amour que je n’ose même plus rêver, parce que tu le rends réel.</li>
+                        </ul>
+                    </div>
+                    
+                    <p class="love-text">M####, mon cœur bat plus fort rien qu’en pensant à toi. Tu es l’amour pur, la douceur incarnée, l’étincelle qui illumine mes jours sombres. Chaque parcelle de mon être te chérit plus que les mots ne pourront jamais l’exprimer.  
+                        Aujourd’hui, je veux te couvrir de milliers de baisers,<br> de câlins sans fin et de promesses d’amour infini. Que cette nouvelle année t’apporte autant de bonheur que tu m’en donnes chaque jour.
+                        Je t’aime plus que es étoiles dans le ciel, plus que l’océan n’est profond, plus que le temps n’est long. Tu es mon univers, ma raison de croire en la magie.  
+                        🎂 Que cette journée soit remplie de douceur, de passion et de rêves qui s’embrasent… Tout comme mon cœur pour toi. 
+                    </p>
+                    
+                    <p class="promise">Je promets de t'aimer aujourd'hui, demain, et pour toujours.</p>
+                    
+                    <div class="signature">À toi, pour toujours…💞🔥   <br>Ton amour, ta lumière, ton bonheur…🌹💋 </div>
+                </div>
+            </div>
+            
+            <a href="next.html" class="next-link">Voir la surprise</a>
+        </div>
+    </div>
+
+    <audio id="birthdayMusic" src="Au1.mp3" preload="auto"></audio>
+    
+    <script>
+        // Au début de votre script.js
+        document.addEventListener('DOMContentLoaded', function() {
+            // Affiche le logo au chargement
+            const logo = document.getElementById('logo-screen');
+            
+            // Cache le contenu principal pendant l'affichage du logo
+            document.querySelector('.content').style.visibility = 'hidden';
+            
+            // Après 3 secondes, fait disparaître le logo
+            setTimeout(function() {
+                logo.style.opacity = '0';
+                
+                // Quand la transition est terminée
+                setTimeout(function() {
+                    logo.style.display = 'none';
+                    // Affiche le contenu principal
+                    document.querySelector('.content').style.visibility = 'visible';
+                }, 1000); // Correspond à la durée de la transition (1s)
+            }, 3000); // Durée d'affichage du logo (s)
+        });
+
+        // Variables globales
+        let musicPlayed = false;
+        let heartsInterval;
+
+        // Fonction pour ouvrir le cadeau
+        function openGift() {
+            // 1. Faire disparaître le texte "Clique sur le cadeau"
+            document.querySelector('.instruction').style.display = 'none';
+            
+            // 2. Cacher la boîte cadeau
+            document.getElementById('giftBox').classList.add('hidden');
+            
+            // 3. Afficher la vidéo
+            const videoContainer = document.getElementById('videoContainer');
+            videoContainer.classList.remove('hidden');
+            
+            // 4. Jouer la vidéo
+            const video = document.getElementById('birthdayVideo');
+            video.play();
+            
+            // 5. Démarrer la musique
+            const audio = document.getElementById('birthdayMusic');
+            audio.muted = false;
+            audio.play();
+            musicPlayed = true;
+
+            // 6. Plein écran pour la vidéo
+            if (video.requestFullscreen) {
+                video.requestFullscreen().catch(err => {
+                    console.log("Erreur plein écran:", err);
+                });
+            }
+
+            // 7. Quand la vidéo se termine
+            video.onended = function() {
+                videoContainer.classList.add('hidden');
+                exitFullscreen();
+                showLoveMessage();
+                startHeartsAnimation();
+            };
+        }
+
+        // Fonction pour quitter le plein écran
+        function exitFullscreen() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(console.error);
+            }
+        }
+
+        // Afficher le message d'amour
+        function showLoveMessage() {
+            const message = document.getElementById('finalMessage');
+            message.classList.remove('hidden');
+            
+            // Activer le défilement si nécessaire
+            message.style.overflowY = 'auto';
+            message.style.maxHeight = '90vh';
+        }
+
+        // Animation des cœurs
+        function startHeartsAnimation() {
+            clearInterval(heartsInterval);
+            heartsInterval = setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const hearts = ['❤️', '💖', '💗', '💓', '💞', '💕', '💘'];
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+            heart.style.animationDuration = (3 + Math.random() * 7) + 's';
+            document.querySelector('.hearts-animation').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        // Initialisation audio
+        document.addEventListener('click', initAudio, { once: true });
+
+        function initAudio() {
+            const music = document.getElementById('birthdayMusic');
+            if (music.paused && !musicPlayed) {
+                music.play().catch(e => console.log("Audio bloqué:", e));
+                music.loop = true;
+                musicPlayed = true;
+            }
+        }
+    </script>
+</body>
+</html>
